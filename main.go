@@ -108,7 +108,7 @@ func main() {
 		p.ReturnVal(4),
 		p.ReturnVal(5),
 		p.ReturnVal(6),
-	})
+	}).AddSeries("Values", generateBarItems(p))
 
 	e, _ := os.Create("brooklyn-data.html")
 	bar.Render(e)
