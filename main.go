@@ -22,19 +22,18 @@ type PairList []Pair
 func (p PairList) Len() int               { return len(p) }
 func (p PairList) Swap(i, j int)          { p[i], p[j] = p[j], p[i] }
 func (p PairList) Less(i, j int) bool     { return p[i].Value < p[j].Value }
-func (p PairList) ReturnVal(i int) string { return p[i].Key }
+func (p PairList) ReturnKey(i int) string { return p[i].Key }
+func (p PairList) ReturnVal(i int) int    { return p[i].Value }
 
 func generateBarItems(data PairList) []opts.BarData {
-	barData := make([]int, 7)
+	barData := []int{}
 	items := make([]opts.BarData, 0)
-	for k, _ := range data {
-		if len(barData) == 7 {
-			break
-		} else {
-			barData = append(barData, data[k].Value)
-		}
+
+	for i := 0; i <= 6; i++ {
+		barData = append(barData, data[i].Value)
+		fmt.Println(barData)
 	}
-	fmt.Println(barData)
+
 	for _, v := range barData {
 		items = append(items, opts.BarData{Value: v})
 	}
@@ -51,7 +50,7 @@ func main() {
 		Title:    "Common Foods Wasted in Brooklyn",
 		Subtitle: "Edible and wasted food found in retailer trash piles around Brooklyn",
 	}))
-	p := make(PairList, 85)
+
 	i := 0
 
 	// Reading the CSV and Extracting the Data
@@ -84,6 +83,7 @@ func main() {
 		}
 	}
 
+	p := make(PairList, len(freq))
 	// for k, v := range freq {
 	// 	fmt.Printf("Item : %s \nCount: %d\n", k, v)
 	// }
@@ -102,13 +102,13 @@ func main() {
 
 	//Setting Instance of Bar
 	bar.SetXAxis([]string{
-		p.ReturnVal(0),
-		p.ReturnVal(1),
-		p.ReturnVal(2),
-		p.ReturnVal(3),
-		p.ReturnVal(4),
-		p.ReturnVal(5),
-		p.ReturnVal(6),
+		p[0].Key[0:4],
+		p[1].Key[0:4],
+		p[2].Key[0:4],
+		p[3].Key[0:4],
+		p[4].Key[0:4],
+		p[5].Key[0:4],
+		p[6].Key[0:4],
 	}).AddSeries("Values", generateBarItems(p))
 
 	e, _ := os.Create("brooklyn-data.html")
