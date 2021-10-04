@@ -34,6 +34,7 @@ func generateBarItems(data PairList) []opts.BarData {
 			barData = append(barData, data[k].Value)
 		}
 	}
+	fmt.Println(barData)
 	for _, v := range barData {
 		items = append(items, opts.BarData{Value: v})
 	}
